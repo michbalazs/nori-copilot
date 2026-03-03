@@ -10,7 +10,7 @@ on:
       - main
 
 permissions:
-  id-token: write
+  id-token: write   # required for OIDC
   contents: read
 
 jobs:
@@ -32,11 +32,7 @@ jobs:
         run: npm run build
 
       - name: Deploy to Azure Static Web Apps
-        uses: Azure/static-web-apps-deploy@v1
+        uses: Azure/static-web-apps-deploy@v2
         with:
-          azure_static_web_apps_api_token: ""   # EMPTY = OIDC mode
-          skip_deploy_on_missing_secrets: true 
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          action: "upload"
-          app_location: "public"
-          output_location: "dist"
+          app_location: "public"       # Where your source files live
+          output_location: "dist"      # Where your build outputs to
